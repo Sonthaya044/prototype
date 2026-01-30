@@ -29,8 +29,13 @@ const showError = message => updateResult(`<p class="error">${message}</p>`);
 // Scan URL
 // ===============================
 async function scanURL() {
-    const url = getElement('urlInput').value.trim();
-    if (!url) return showError("Please enter a URL!");
+    let url = getElement('urlInput').value.trim();
+
+// 👉 ถ้าไม่ใส่ http/https ให้เติม https:// อัตโนมัติ
+    if (!/^https?:\/\//i.test(url)) {
+        url = "https://" + url;
+    }
+
 
     try {
         new URL(url);
