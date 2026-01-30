@@ -1,3 +1,7 @@
+const API_URL = "https://prototype-api.onrender.com"; 
+// ⬅️ ใช้ URL Render ของคุณจริง ๆ
+
+
 // Utility function to get DOM elements by ID
 const getElement = id => document.getElementById(id);
 
@@ -20,23 +24,7 @@ const showLoading = message => updateResult(`
 const showError = message => updateResult(`<p class="error">${message}</p>`);
 
 // Generic function to make authenticated API requests ro VirusTotal
-async function makeRequest(url, options = {}) {
-    const response = await fetch(url, {
-        ...options,
-        headers: {
-            "x-apikey": API_KEY,
-            ...options.headers
-        }
-    });
 
-    // Handle failed requests gracefully
-    if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: { message: response.statusText } }));
-        throw new Error(error.error?.message || 'Request failed!');
-    }
-
-    return response.json(); // Parse response JSON
-}
 
 // Scan URL
 // ===============================
@@ -54,7 +42,7 @@ async function scanURL() {
         showLoading("Submitting URL for scanning...");
 
         // 👉 เรียก server (POST)
-        const submitResult = await fetch("http://localhost:3001/api/scan", {
+            const submitResult = await fetch(`${API_URL}/api/scan`, {
 
             method: "POST",
             headers: {
@@ -90,7 +78,7 @@ async function pollAnalysisResults(analysisId) {
         try {
             showLoading(`Analyzing... (${((maxAttempts - attempts) * interval / 1000).toFixed(0)}s remaining)`);
 
-            const report = await fetch(`http://localhost:3001/api/result/${analysisId}`)
+            const report = await fetch(`${API_URL}/api/result/${analysisId}`)
                 .then(res => res.json());
 
             const status = report?.data?.attributes?.status;
