@@ -1,6 +1,5 @@
-const API_URL = "https://prototype-api.onrender.com"; 
 // ⬅️ ใช้ URL Render ของคุณจริง ๆ
-
+const API_URL = "https://prototype-n3pj.onrender.com/api/scan"; 
 
 // Utility function to get DOM elements by ID
 const getElement = id => document.getElementById(id);
