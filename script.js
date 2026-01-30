@@ -1,5 +1,6 @@
-// ⬅️ ใช้ URL Render ของคุณจริง ๆ
-const API_URL = "https://prototype-n3pj.onrender.com/api/scan"; 
+// ✅ base URL เท่านั้น
+const API_URL = "https://prototype-n3pj.onrender.com";
+
 
 // Utility function to get DOM elements by ID
 const getElement = id => document.getElementById(id);
@@ -42,13 +43,13 @@ async function scanURL() {
 
         // 👉 เรียก server (POST)
             const submitResult = await fetch(`${API_URL}/api/scan`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                 },
+                body: JSON.stringify({ url })
+            }).then(res => res.json());
 
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({ url })
-        }).then(res => res.json());
 
         // ✅ FIX จุดพัง
         if (!submitResult.analysisId) {
@@ -79,6 +80,7 @@ async function pollAnalysisResults(analysisId) {
 
             const report = await fetch(`${API_URL}/api/result/${analysisId}`)
                 .then(res => res.json());
+
 
             const status = report?.data?.attributes?.status;
             if (!status) throw new Error("Invalid analysis response");
