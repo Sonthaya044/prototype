@@ -1,4 +1,4 @@
-const API_URL = "https://prototype-api.onrender.com"; 
+const API_URL = "https://prototype-api.onrender.com/api/scan"; 
 // ⬅️ ใช้ URL Render ของคุณจริง ๆ
 
 
